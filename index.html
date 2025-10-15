@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        .container {
+            max-width: 400px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .input-field {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        .input-field input {
+            width: 80%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .input-field button {
+            width: 20%;
+            padding: 10px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .todo-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .todo-item {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+        .todo-item:last-child {
+            border-bottom: none;
+        }
+        .todo-item.completed {
+            text-decoration: line-through;
+            color: #666;
+        }
+        .todo-item button {
+            float: right;
+            padding: 5px 10px;
+            font-size: 14px;
+            background-color: #f44336;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .todo-item button.completed-btn {
+            background-color: #4CAF50;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="header">Todo List App</h2>
+        <div class="input-field">
+            <input type="text" id="task-input" placeholder="Enter task">
+            <button id="add-task-btn">Add Task</button>
+        </div>
+        <ul class="todo-list" id="todo-list"></ul>
+    </div>
+
+    <script>
+        let taskInput = document.getElementById('task-input');
+        let addTaskBtn = document.getElementById('add-task-btn');
+        let todoList = document.getElementById('todo-list');
+
+        let tasks = [];
+
+        addTaskBtn.addEventListener('click', addTask);
+
+        function addTask() {
+            let task = taskInput.value.trim();
+            if (task !== '') {
+                tasks.push({ task, completed: false });
+                renderTodoList();
+                taskInput.value = '';
+            }
+        }
+
+        function renderTodoList() {
+            todoList.innerHTML = '';
+            tasks.forEach((task, index) => {
+                let todoItem = document.createElement('li');
+                todoItem.classList.add('todo-item');
+                if (task.completed) {
+                    todoItem.classList.add('completed');
+                }
+                todoItem.innerHTML = `
+                    ${task.task}
+                    <button class="completed-btn" onclick="toggleCompleted(${index})">Completed</button>
+                    <button onclick="deleteTask(${index})">Delete</button>
+                `;
+                todoList.appendChild(todoItem);
+            });
+        }
+
+        function toggleCompleted(index) {
+            tasks[index].completed = !tasks[index].completed;
+            renderTodoList();
+        }
+
+        function deleteTask(index) {
+            tasks.splice(index, 1);
+            renderTodoList();
+        }
+    </script>
+</body>
+</html>
+
+2. Type a task into the input field and click the "Add Task" button to add it to the list.
+3. Click the "Completed" button next to a task to mark it as completed.
+4. Click the "Delete" button next to a task to remove it from the list.
+
+This app is licensed under the MIT License, which means it is free to use, modify, and distribute. You can use this app as a starting point for your own projects, and you are encouraged to modify and improve it as you see fit.
+
+Note: This app is a self-contained HTML file and does not require any extra files or frameworks to run. It can be used offline, making it a great tool for quick and easy task management.
